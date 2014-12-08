@@ -1,8 +1,8 @@
 module Plaid
   module Configure
-    attr_writer :customer_id, :secret
+    attr_writer :customer_id, :secret, :url
 
-    KEYS = [:customer_id, :secret]
+    KEYS = [:customer_id, :secret, :url]
 
     def config
       yield self

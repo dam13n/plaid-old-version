@@ -1,15 +1,6 @@
 module Plaid
   class Call
 
-    # if Rails.env.production?
-    #   puts 'prod'
-    #   BASE_URL = 'https://api.plaid.com/'
-    # else
-    #   puts 'dev'
-    #   BASE_URL = 'https://tartan.plaid.com/'
-    # end
-    BASE_URL = ENV['PLAID_URL']
-
     # This initializes our instance variables, and sets up a new Customer class.
     def initialize
       Plaid::Configure::KEYS.each do |key|
@@ -88,12 +79,12 @@ module Plaid
     private
 
     def post(path,type,username,password,email,options={})
-      url = BASE_URL + path
+      url = self.instance_variable_get(:'@url') + path
       RestClient.post url, client_id: self.instance_variable_get(:'@customer_id') ,secret: self.instance_variable_get(:'@secret'), type: type ,credentials: {username: username, password: password} ,email: email, options: options
     end
 
     def get(path,id = nil)
-      url = BASE_URL + path + id.to_s
+      url = self.instance_variable_get(:'@url') + path + id.to_s
       RestClient.get(url)
     end
 
