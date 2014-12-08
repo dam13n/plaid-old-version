@@ -1,14 +1,14 @@
 module Plaid
   class Call
 
-    if Rails.env.production?
-      puts 'prod'
-      BASE_URL = 'https://api.plaid.com/'
-    else
-      puts 'dev'
-      BASE_URL = 'https://tartan.plaid.com/'
-    end
-    # BASE_URL = ENV['PLAID_URL']
+    # if Rails.env.production?
+    #   puts 'prod'
+    #   BASE_URL = 'https://api.plaid.com/'
+    # else
+    #   puts 'dev'
+    #   BASE_URL = 'https://tartan.plaid.com/'
+    # end
+    BASE_URL = ENV['PLAID_URL']
 
     # This initializes our instance variables, and sets up a new Customer class.
     def initialize
