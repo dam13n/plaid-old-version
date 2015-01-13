@@ -22,7 +22,7 @@ module Plaid
 
     #deprecated
     def get_place(id)
-      parse_place(get('entities/',id))
+      parse_place(get('/entities/',id))
     end
 
     def get_institutions
