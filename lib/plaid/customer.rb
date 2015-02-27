@@ -20,7 +20,14 @@ module Plaid
 
     def get_transactions(access_token, start_date=nil, end_date=nil)
       options = {start_date: start_date, end_date: end_date}
+      # options = {gte: start_date, lte: end_date}
       parse_response(get('/connect', access_token, options),2)
+    end
+
+    def post_transactions(access_token, start_date=nil, end_date=nil)
+      # options = {start_date: start_date, end_date: end_date}
+      options = {gte: start_date, lte: end_date}
+      parse_response(post_connect('/connect/get', access_token, options),2)
     end
 
     def delete_account(access_token)
@@ -51,10 +58,12 @@ module Plaid
 
     def get(path,access_token, options={})
       url = self.instance_variable_get(:'@url') + path
-      puts url
-      puts self.instance_variable_get(:'@secret')
-      puts self.instance_variable_get(:'@cusomter_id')
-      RestClient.get(url, params: {client_id: self.instance_variable_get(:'@customer_id'), secret: self.instance_variable_get(:'@secret'), access_token: access_token}) #, options: options})
+      RestClient.get(url, params: {client_id: self.instance_variable_get(:'@customer_id'), secret: self.instance_variable_get(:'@secret'), access_token: access_token, options: options})
+    end
+
+    def post_connect(path,access_token, options={})
+      url = self.instance_variable_get(:'@url') + path
+      RestClient.post(url, client_id: self.instance_variable_get(:'@customer_id'), secret: self.instance_variable_get(:'@secret'), access_token: access_token, options: options)
     end
 
     def post(path,access_token,options={})
