@@ -19,7 +19,10 @@ module Plaid
     end
 
     def get_transactions(access_token, start_date=nil, end_date=nil)
-      options = {start_date: start_date, end_date: end_date}
+      options = {}
+      if start_date && end_date
+        options = {start_date: start_date, end_date: end_date}
+      end
       # options = {gte: start_date, lte: end_date}
       parse_response(get('/connect', access_token, options),2)
     end
