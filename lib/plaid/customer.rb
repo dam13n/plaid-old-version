@@ -29,7 +29,11 @@ module Plaid
 
     def post_transactions(access_token, start_date=nil, end_date=nil)
       # options = {start_date: start_date, end_date: end_date}
-      options = {gte: start_date, lte: end_date}
+      options = {}
+      if start_date && end_date
+        options = {gte: start_date, lte: end_date}
+      end
+
       parse_response(post_connect('/connect/get', access_token, options),2)
     end
 
